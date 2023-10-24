@@ -210,7 +210,8 @@ export function schema2component(
     }
   }
 
-  return withRouter(SchemaRenderer);
+  // @ts-ignore
+    return withRouter(SchemaRenderer);
 }
 
 export default schema2component({type: 'page', body: 'It works'});

@@ -1,6 +1,8 @@
 import {types, getEnv, applySnapshot, getSnapshot} from 'mobx-state-tree';
 import {PageStore} from './Page';
 import {when, reaction} from 'mobx';
+import {API_HOST} from '../config';
+
 let pagIndex = 1;
 export const MainStore = types
   .model('MainStore', {
@@ -24,7 +26,7 @@ export const MainStore = types
     addPageIsOpen: false,
     preview: false,
     isMobile: false,
-    schema: types.frozen()
+    schema: types.frozen()  // preview and editor schema
   })
   .views(self => ({
     get fetcher() {
@@ -63,6 +65,7 @@ export const MainStore = types
       icon?: string;
       schema?: any;
     }) {
+      // console.log('addPage', data);
       self.pages.push(
         PageStore.create({
           ...data,
@@ -75,12 +78,31 @@ export const MainStore = types
       self.pages.splice(index, 1);
     }
 
-    function updatePageSchemaAt(index: number) {
-      self.pages[index].updateSchema(self.schema);
+    function updatePageSchemaAt(id: any) {
+      let index = -1
+      if (typeof id === 'string') {
+        for (let i = 0; i < self.pages.length; i++) {
+          if (self.pages[i].id === id) {
+            index = i;
+            break;
+          }
+        }
+      }
+      if (index === -1) {
+        addPage({
+          label: id,
+          path: id,
+          schema: self.schema
+        })
+      }
+
+      if (self.pages[index])
+        self.pages[index].updateSchema(self.schema);
     }
 
     function updateSchema(value: any) {
       self.schema = value;
+      // console.log('updateSchema', value);
     }
 
     function setPreview(value: boolean) {
@@ -102,15 +124,20 @@ export const MainStore = types
       updateSchema,
       setPreview,
       setIsMobile,
-      afterCreate() {
+      async afterCreate() {
         // persist store
+        // let schema = await fetch(API_HOST+'/pages/schema/')
+        // .then(res => res.json())
         if (typeof window !== 'undefined' && window.localStorage) {
+          // todo  get from server
           const storeData = window.localStorage.getItem('store');
           if (storeData) applySnapshot(self, JSON.parse(storeData));
 
           reaction(
             () => getSnapshot(self),
             json => {
+              console.log('save to server', json);
+              // todo save to server
               window.localStorage.setItem('store', JSON.stringify(json));
             }
           );

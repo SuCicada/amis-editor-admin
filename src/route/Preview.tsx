@@ -52,13 +52,16 @@ export default inject('store')(
     }
 
     function renderAside() {
+      console.log('store.pages', store);
+        console.log('location', location);
+
       const navigations = store.pages.map(item => ({
         label: item.label,
-        path: `/${item.path}`,
+        path: `/preview/${item.path}`,
         icon: item.icon
       }));
       const paths = navigations.map(item => item.path);
-
+      console.log('store.asideFolded', store.asideFolded);
       return (
         <AsideNav
           key={store.asideFolded ? 'folded-aside' : 'aside'}
@@ -149,10 +152,11 @@ export default inject('store')(
               </span>
             );
 
-            return link.path ? (
+              return link.path ? (
               link.active ? (
                 <a>{children}</a>
               ) : (
+            // @ts-ignore
                 <Link to={link.path[0] === '/' ? link.path : `${link.path}`}>
                   {children}
                 </Link>
@@ -193,6 +197,7 @@ export default inject('store')(
       store.setAddPageIsOpen(false);
     }
 
+    console.log('store.pages', store.pages);
     return (
       <Layout
         aside={renderAside()}
@@ -204,7 +209,7 @@ export default inject('store')(
           {store.pages.map((item: any) => (
             <Route
               key={item.id}
-              path={`/${item.path}`}
+              path={`/preview/${item.path}`}
               render={() => <AMISRenderer schema={item.schema} />}
             />
           ))}

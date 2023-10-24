@@ -65,3 +65,11 @@ gh-pages
 .DS_Store
 
 package-lock.json
+dist
+src/**/*.js
+src/**/*.js.map
+/vite.config.js
+/vite.config.js.map
+/stats.html
+.idea
+/demo-*
