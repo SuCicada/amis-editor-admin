@@ -1,8 +1,8 @@
 import React, {useEffect} from 'react';
 import {Editor, ShortcutKey} from 'amis-editor';
 import {inject, observer} from 'mobx-react';
-import {RouteComponentProps} from 'react-router-dom';
-import {toast, Select} from 'amis';
+import {RouteComponentProps, useParams} from 'react-router-dom';
+import {toast, Select, SchemaObject} from 'amis';
 import {currentLocale} from 'i18n-runtime';
 import {Icon} from '../icons/index';
 import {IMainStore} from '../store';
@@ -42,14 +42,21 @@ export default inject('store')(
       history,
       match
     }: { store: IMainStore } & RouteComponentProps<{ id: string }>) {
-    let [schema, setSchema] = React.useState({} as any)
+    let [schema, setSchema] = React.useState<SchemaObject>(null as any)
+    let [loadOver, setLoadOver] = React.useState(false)
     const id = match.params.id;
+    // const {id} = useParams();
+    // console.log(match)
+    // console.log(params)
+
 
     useEffect(() => {
       (async function () {
         let response = await fetch(`${API_HOST}/pages/schema/${id}`)
         let _schema = await response.json()
         setSchema(_schema)
+        toast.success('加载成功', '提示');
+        setLoadOver(true)
       })()
     }, []);
 
@@ -63,7 +70,10 @@ export default inject('store')(
     }
 
     async function saveToServer(_schema: any = {}) {
-      console.log('_schema', _schema);
+      // console.log('_schema', _schema);
+      if (!loadOver) {
+        return
+      }
       if (!_schema || _.isEmpty(_schema)) {
         return
       }
@@ -83,7 +93,9 @@ export default inject('store')(
     }
 
     useEffect(() => {
-      saveToServer(schema)
+      // if (schema && !_.isEmpty(schema)){
+        saveToServer(schema)
+      // }
     }, [schema])
 
     async function save() {
@@ -108,7 +120,7 @@ export default inject('store')(
       history.push(`/admin/${id}`);
     }
 
-    return (
+    let editor = (
       <div className="Editor-Demo">
         <div className="Editor-header">
           <div className="Editor-title">amis 可视化编辑器</div>
@@ -191,5 +203,13 @@ export default inject('store')(
         </div>
       </div>
     );
+    if (schema && !_.isEmpty(schema)) {
+      return editor
+    } else {
+      return <h1 style={{
+        display: "flex",
+        justifyContent: 'center'
+      }}>等等🙏，疯狂生成中</h1>
+    }
   })
 );

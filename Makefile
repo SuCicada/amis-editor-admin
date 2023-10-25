@@ -5,9 +5,11 @@
 build: clean
 	#tsc
 	vite build
+	du -sh dist
 
 clean:
 	ts-clean-built --built
+	rm -rf dist
 
 dist_server:
-	serve dist -p 58760
+	serve dist -p 58761

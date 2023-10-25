@@ -1,6 +1,7 @@
 import {defineConfig, loadEnv, ConfigEnv, UserConfig, PluginOption} from "vite";
 import react from "@vitejs/plugin-react";
 import viteEasyMock from "vite-easy-mock";
+import viteCompression from "vite-plugin-compression";
 
 import svgr from "vite-plugin-svgr";
 
@@ -30,8 +31,7 @@ export default defineConfig((mode: ConfigEnv): UserConfig => {
         }
       },
       postcss: {
-        plugins: [
-        ]
+        plugins: []
       }
     },
     // server config
@@ -43,8 +43,7 @@ export default defineConfig((mode: ConfigEnv): UserConfig => {
       hmr: false,
       // https: false,
       // Proxy cross-domain (mock does not need to be configured, this is just a matter)
-      proxy: {
-      }
+      proxy: {}
     },
     optimizeDeps: {
       esbuildOptions: {
@@ -74,6 +73,15 @@ export default defineConfig((mode: ConfigEnv): UserConfig => {
       }),
       // exportAsDefault: true
       react(),
+
+      // viteCompression({
+      //     verbose: true,
+      //     disable: false,
+      //     threshold: 10240,
+      //     algorithm: 'gzip',
+      //     ext: '.gz',
+      //     deleteOriginFile: true
+      // })
     ],
     build: {
       target: "es2015",
@@ -87,7 +95,17 @@ export default defineConfig((mode: ConfigEnv): UserConfig => {
         output: {
           // Enable parallel builds
           manualChunks: undefined,
+          chunkFileNames: 'js/[name]-[hash].js',  // 引入文件名的名称
+          entryFileNames: 'js/[name]-[hash].js',  // 包的入口文件名称
+          assetFileNames: 'assets/[name]-[hash].[ext]' // 资源文件像 字体，图片等
         }
+      },
+      terserOptions: {
+        compress: {
+          drop_console: true,
+          drop_debugger: true
+        },
+        sourcemap: false,
       }
     }
   };

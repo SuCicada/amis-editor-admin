@@ -15,6 +15,7 @@ import {inject, observer} from "mobx-react";
 import {IMainStore} from "./store";
 import {RouteComponentProps} from "react-router";
 import ReactDOM from 'react-dom';
+import {API_HOST} from "@/config";
 
 const AMISComponent = (
   {
@@ -223,7 +224,7 @@ const AMISComponent = (
   const app = {
     type: 'app',
     brandName: 'Admin',
-    logo: '/public/logo.png',
+    logo: `${API_HOST}/public/logo.png`,
     header: {
       type: 'tpl',
       inline: false,
@@ -233,7 +234,7 @@ const AMISComponent = (
     footer: '<div class="p-2 text-center bg-light">底部区域</div>',
     asideBefore: '<div class="p-2 text-center">菜单前面区域</div>',
     asideAfter: '<div class="p-2 text-center">菜单后面区域</div>',
-    api: '/pages/site.json'
+    api: `${API_HOST}/pages/site.json`
   };
   // const history = History.createHashHistory();
   // history.listen(state => {
