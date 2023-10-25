@@ -7,13 +7,13 @@ import {ToastComponent, AlertComponent, Spinner} from 'amis';
 import {Route, Switch, Redirect, BrowserRouter as Router} from 'react-router-dom';
 import {observer} from 'mobx-react';
 import {IMainStore} from '../store/index';
-import $ from "jquery";
 // import Preview from './Preview';
 // import Editor from './Editor';
-import '../renderer/MyRenderer';
-import '../renderer/my';
-import '../renderer/video_make_image_select';
-import('../renderer/table_section')
+// import '../renderer/MyRenderer';
+// import '../renderer/my';
+// import '../renderer/video_make_image_select';
+// import('../renderer/table_section')
+import "../renderer/index";
 
 const Admin = React.lazy(() => import('./Admin'));
 const Editor = React.lazy(() => import('./Editor'));
