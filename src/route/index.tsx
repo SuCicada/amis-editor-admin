@@ -18,7 +18,7 @@ import('../renderer/table_section')
 const Admin = React.lazy(() => import('./Admin'));
 const Editor = React.lazy(() => import('./Editor'));
 const Preview = React.lazy(() => import('./Preview'));
-const Editor0 = React.lazy(() => import('./Editor0'));
+const Editor0 = React.lazy(() => import('../trash/Editor0'));
 
 export default observer(function ({store}: {store: IMainStore}) {
     // useEffect(() => {

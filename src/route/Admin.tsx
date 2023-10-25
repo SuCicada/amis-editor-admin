@@ -246,7 +246,10 @@ export default inject('store')(
         offScreen={store.offScreen}
       >
         <Switch>
-          <Redirect to={`/admin`} from={`/`} exact />
+          {pages.length > 0 && (
+          <Redirect to={`/admin${pages[0].url}`} from={`/admin`} exact />
+          )}
+
           {pages.map((item: AppPage) => {
             // console.log('item', item);
             return (
