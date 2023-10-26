@@ -9,8 +9,8 @@ export default function AdminPreview(props: { schemaApi: string }) {
     (async () => {
       console.log("schemaApi is ", schemaApi)
       let url = `${API_HOST}${schemaApi}`
-      let schema = await fetch(url).then(res => res.json());
-      setSchema(schema);
+      let schema1 = await fetch(url).then(res => res.json());
+      setSchema(schema1)
     })();
   }, []);
 
