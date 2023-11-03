@@ -13,7 +13,7 @@ export default function (): JSX.Element {
       fetcher: ({url, method, data, config, headers}: any) => {
         config = config || {};
         config.headers = config.headers || headers || {};
-        config.withCredentials = true;
+        config.withCredentials = false;
 
         if (method !== 'post' && method !== 'put' && method !== 'patch') {
           if (data) {
@@ -42,10 +42,11 @@ export default function (): JSX.Element {
         return (axios as any)[method](url, data, config);
       },
       isCancel: (e: any) => axios.isCancel(e),
-      notify: (type: 'success' | 'error' | 'info', msg: string) => {
-        toast[type]
-          ? toast[type](msg, type === 'error' ? '系统错误' : '系统消息')
-          : console.warn('[Notify]', type, msg);
+      notify: (type: 'success' | 'error' | 'info', msg: string, conf: any) => {
+        // type === 'error' ? '系统错误' : '系统消息'
+        // toast[type]
+        //   ? toast[type](msg, conf)
+        //   : console.warn('[Notify]', type, msg);
         console.log('[notify]', type, msg);
       },
       alert,
@@ -53,8 +54,8 @@ export default function (): JSX.Element {
       copy: (contents: string, options: any = {}) => {
         const ret = copy(contents, options);
         ret &&
-          (!options || options.shutup !== true) &&
-          toast.info('内容已拷贝到剪切板');
+        (!options || options.shutup !== true) &&
+        toast.info('内容已拷贝到剪切板');
         return ret;
       }
     }
@@ -62,7 +63,7 @@ export default function (): JSX.Element {
 
   return (
     <Provider store={store}>
-      <RootRoute store={store} />
+      <RootRoute store={store}/>
     </Provider>
   );
 }

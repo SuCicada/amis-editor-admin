@@ -84,27 +84,39 @@ export default inject('store')(
         },
         body: JSON.stringify(_schema)
       }).then(response => {
+        let conf = {
+          position: 'top-left',
+        }
         if (response.ok) {
-          toast.success('保存成功', '提示');
+          toast.success('保存成功', conf);
         } else {
-          toast.error('保存失败', '提示');
+          toast.error('保存失败', conf);
         }
       })
     }
 
     useEffect(() => {
       // if (schema && !_.isEmpty(schema)){
-        saveToServer(schema)
+      saveToServer(schema)
       // }
     }, [schema])
 
     async function save() {
       await saveToServer(schema)
       store.updatePageSchemaAt(id);
-      toast.success('保存成功', '提示');
+      // store.notify('success', '保存成功', {
+      // toast.success('保存成功111',{
+      //   // position: 'top-center',
+      //   position: 'top-left',
+      //   className: "theme-toast-action-scope",
+      //   closeButton: false,
+      // });
     }
 
     function onChange(value: any) {
+      if (_.isEqual(value, schema)) {
+        return
+      }
       setSchema(value)
       store.updateSchema(value);
       store.updatePageSchemaAt(id);

@@ -6,6 +6,7 @@ import {IMainStore} from '../store';
 import qs from 'qs';
 import {render as amisRender, utils, filter} from 'amis';
 import {API_HOST} from "@/config";
+import 'react-json-view';
 
 export function schema2component(
   schema: any,
@@ -25,6 +26,7 @@ export function schema2component(
     env: any;
 
     getEnv() {
+      // console.log(this.env)
       if (this.env) {
         return this.env;
       }
@@ -32,7 +34,7 @@ export function schema2component(
       const props = this.props;
       const store = props.store;
       const rootEnv = getEnv(store);
-
+      // console.log(rootEnv)
       const normalizeLink = (to: string, preserveHash?: boolean) => {
         if (/^\/api\//.test(to)) {
           return to;
@@ -163,7 +165,8 @@ export function schema2component(
               history.push(to);
             }
           }),
-        affixOffsetTop: props.embedMode ? 0 : 50
+        affixOffsetTop: props.embedMode ? 0 : 50,
+        enableAMISDebug: true,  // 是否启用 amis debug
       });
     }
 
@@ -186,7 +189,7 @@ export function schema2component(
       if (!finalSchema.type) {
         finalSchema = {...finalSchema, type: 'page'};
       }
-
+      console.log(this.getEnv())
       body = amisRender(
         finalSchema,
         {
