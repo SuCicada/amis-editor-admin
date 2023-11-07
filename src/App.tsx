@@ -5,10 +5,12 @@ import axios from 'axios';
 import {MainStore} from './store/index';
 import RootRoute from './route/index';
 import copy from 'copy-to-clipboard';
+import {types, getEnv} from 'mobx-state-tree';
 
 export default function (): JSX.Element {
   const store = ((window as any).store = MainStore.create(
-    {},
+    {
+    },
     {
       fetcher: ({url, method, data, config, headers}: any) => {
         config = config || {};
@@ -62,8 +64,8 @@ export default function (): JSX.Element {
   ));
 
   return (
-    <Provider store={store}>
-      <RootRoute store={store}/>
+    <Provider store={store} globalStore={store}>
+      <RootRoute store={store} />
     </Provider>
   );
 }

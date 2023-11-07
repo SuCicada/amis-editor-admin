@@ -40,7 +40,8 @@ export default defineConfig((mode: ConfigEnv): UserConfig => {
       port: 58760,
       open: false,
       cors: true,
-      hmr: false,
+      // hmr: false,
+      hmr: true,
       // https: false,
       // Proxy cross-domain (mock does not need to be configured, this is just a matter)
       proxy: {}
@@ -105,7 +106,7 @@ export default defineConfig((mode: ConfigEnv): UserConfig => {
           drop_console: true,
           drop_debugger: true
         },
-        sourcemap: false,
+        // sourcemap: false,
       }
     }
   };

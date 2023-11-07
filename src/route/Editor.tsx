@@ -11,7 +11,8 @@ import {API_HOST} from '../config';
 import _ from "lodash";
 import '../renderer/MyRenderer';
 import MyRendererPlugin from '../editor/MyRenderer';
-
+import ImageVideoSelect from '../editor/ImageVideoSelect';
+const plugins = [MyRendererPlugin,ImageVideoSelect];
 let currentIndex = -1;
 
 let host = `${window.location.protocol}//${window.location.host}`;
@@ -189,7 +190,7 @@ export default inject('store')(
         </div>
         <div className="Editor-inner">
           <Editor
-            plugins={[MyRendererPlugin]}
+            plugins={plugins}
             theme={'cxd'}
             preview={store.preview}
             isMobile={store.isMobile}

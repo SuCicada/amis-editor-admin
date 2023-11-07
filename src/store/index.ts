@@ -1,5 +1,6 @@
 import {types, getEnv, applySnapshot, getSnapshot} from 'mobx-state-tree';
 import {PageStore} from './Page';
+import {DefaultUtilsStore, UtilsStore} from './utils';
 import {when, reaction} from 'mobx';
 import {API_HOST} from '../config';
 
@@ -26,7 +27,9 @@ export const MainStore = types
     addPageIsOpen: false,
     preview: false,
     isMobile: false,
-    schema: types.frozen()  // preview and editor schema
+    schema: types.frozen(),  // preview and editor schema
+    // utils: types.optional(UtilsStore, {}),
+    utils: types.optional(UtilsStore,DefaultUtilsStore)
   })
   .views(self => ({
     get fetcher() {

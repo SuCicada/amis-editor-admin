@@ -5,13 +5,9 @@ import {Button, AsideNav, Layout, confirm} from 'amis';
 import {RouteComponentProps, matchPath, Switch, Route} from 'react-router';
 import {Link, Redirect} from 'react-router-dom';
 import NotFound from './NotFound';
-import AMISRenderer from '../component/AMISRenderer';
-import AddPageModal from '../component/AddPageModal';
 import {API_HOST} from "@/config";
 import {AppPage, AppSchema} from "amis/lib/renderers/App";
 import AdminPreview from "@/route/AdminPreview";
-import {LinkItem} from "amis-ui/lib/components/AsideNav";
-import {MenuProps, NavigationItem} from "amis-ui/lib/components/menu";
 
 function isActive(link: any, location: any) {
   const ret = matchPath(location?.pathname, {
