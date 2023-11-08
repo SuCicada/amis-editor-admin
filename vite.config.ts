@@ -106,8 +106,8 @@ export default defineConfig((mode: ConfigEnv): UserConfig => {
           drop_console: true,
           drop_debugger: true
         },
-        // sourcemap: false,
-      }
+      },
+      sourcemap: false,
     }
   };
 });

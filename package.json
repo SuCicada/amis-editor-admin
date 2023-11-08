@@ -4,8 +4,11 @@
   "description": "amis 可视化编辑器",
   "main": "index.js",
   "scripts": {
-    "dev": "vite --mode development",
-    "build": "yarn clean && vite build --mode development",
+    "dev": "yarn dev",
+    "start:dev": "vite --mode development",
+    "start:prod": "vite --mode production",
+    "build": "yarn clean && vite build --mode development --outDir dist",
+    "build:prod": "yarn clean && vite build --mode production --outDir dist-prod",
     "clean": "ts-clean-built --built",
     "dev1": "amis dev",
     "format": "prettier --write \"src/**/**/*.{js,jsx,ts,tsx,vue,scss,json}\""

@@ -75,6 +75,7 @@ dist
 /stats.html
 .idea
 /demo-*
+/dist-*
 
 /src/test/utils.test.ts
 /src/custom/my.d.ts
