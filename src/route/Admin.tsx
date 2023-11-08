@@ -5,7 +5,7 @@ import {Button, AsideNav, Layout, confirm} from 'amis';
 import {RouteComponentProps, matchPath, Switch, Route} from 'react-router';
 import {Link, Redirect} from 'react-router-dom';
 import NotFound from './NotFound';
-import {API_HOST} from "@/config";
+import {API_HOST, ENVIRONMENT} from "@/config";
 import {AppPage, AppSchema} from "amis/lib/renderers/App";
 import AdminPreview from "@/route/AdminPreview";
 
@@ -167,19 +167,20 @@ export default inject('store')(
             //     }}
             //   />
             // );
-
-            children.push(
-              <i
-                key="edit"
-                data-tooltip="编辑"
-                data-position="bottom"
-                className={'navbtn fa fa-pencil'}
-                onClick={(e: React.MouseEvent) => {
-                  e.preventDefault();
-                  history.push(`/edit${link.url}`);
-                }}
-              />
-            );
+            if (ENVIRONMENT === 'development') {
+              children.push(
+                <i
+                  key="edit"
+                  data-tooltip="编辑"
+                  data-position="bottom"
+                  className={'navbtn fa fa-pencil'}
+                  onClick={(e: React.MouseEvent) => {
+                    e.preventDefault();
+                    history.push(`/edit${link.url}`);
+                  }}
+                />
+              );
+            }
 
             children.push(
               <span key="label" className={cx('AsideNav-itemLabel')}>
@@ -243,7 +244,7 @@ export default inject('store')(
       >
         <Switch>
           {pages.length > 0 && (
-          <Redirect to={`/admin${pages[0].url}`} from={`/admin`} exact />
+            <Redirect to={`/admin${pages[0].url}`} from={`/admin`} exact/>
           )}
 
           {pages.map((item: AppPage) => {
