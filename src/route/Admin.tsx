@@ -28,6 +28,7 @@ export default inject('store')(
     let [pages, setPages] = React.useState<AppPage[]>([])
     useEffect(() => {
       (async () => {
+        console.log(`${API_HOST}/pages/site.json`)
         let response = await fetch(`${API_HOST}/pages/site.json`)
         let data = await response.json()
         let appSchema: AppSchema = data.data

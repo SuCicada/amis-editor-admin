@@ -1,6 +1,5 @@
 import {applySnapshot, flow, types} from "mobx-state-tree";
 import {API_HOST} from "@/config";
-import {getMaterialType} from "@/utils/file";
 import * as path from "path";
 export const DefaultUtilsStore = {fileType: {}}
 export const UtilsStore = types
@@ -37,6 +36,7 @@ export const UtilsStore = types
 
     const loadFileType = flow(function* loadFileType() {
       try {
+        console.log(`${API_HOST}/api/settings/file_type`)
         const response = yield fetch(`${API_HOST}/api/settings/file_type`);
         const data = yield response.json();
         self.fileType = data.data; // Assign the data directly to fileType

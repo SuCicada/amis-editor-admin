@@ -4,7 +4,7 @@
   "description": "amis 可视化编辑器",
   "main": "index.js",
   "scripts": {
-    "dev": "yarn dev",
+    "dev": "yarn start:dev",
     "start:dev": "vite --mode development",
     "start:prod": "vite --mode production",
     "build": "yarn clean && vite build --mode development --outDir dist",

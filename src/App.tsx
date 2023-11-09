@@ -46,9 +46,9 @@ export default function (): JSX.Element {
       isCancel: (e: any) => axios.isCancel(e),
       notify: (type: 'success' | 'error' | 'info', msg: string, conf: any) => {
         // type === 'error' ? '系统错误' : '系统消息'
-        // toast[type]
-        //   ? toast[type](msg, conf)
-        //   : console.warn('[Notify]', type, msg);
+        toast[type]
+          ? toast[type](msg, conf)
+          : console.warn('[Notify]', type, msg);
         console.log('[notify]', type, msg);
       },
       alert,
