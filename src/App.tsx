@@ -1,6 +1,6 @@
 import React from 'react';
 import {Provider} from 'mobx-react';
-import {toast, alert, confirm} from 'amis';
+import {toast, alert, confirm, attachmentAdpator} from 'amis';
 import axios from 'axios';
 import {MainStore} from './store/index';
 import RootRoute from './route/index';
@@ -12,7 +12,7 @@ export default function (): JSX.Element {
     {
     },
     {
-      fetcher: ({url, method, data, config, headers}: any) => {
+      fetcher: async({url, method, data, config, headers}: any) => {
         config = config || {};
         config.headers = config.headers || headers || {};
         config.withCredentials = false;
@@ -41,7 +41,19 @@ export default function (): JSX.Element {
             data = JSON.parse(data);
           }
         }
-        return (axios as any)[method](url, data, config);
+        config.headers = headers
+          ? {...config.headers, ...headers}
+          : config.headers ?? {};
+        config.method = method;
+        config.data = data;
+        config.url = url;
+
+        // return (axios as any)[method](url, data, config);
+        // let response = await axios(config);
+        // let response = (axios as any)[method](url, data, config);
+        let response = await axios(config);
+        response = await attachmentAdpator(response, (msg: string) => '');
+        return response;
       },
       isCancel: (e: any) => axios.isCancel(e),
       notify: (type: 'success' | 'error' | 'info', msg: string, conf: any) => {
