@@ -65,6 +65,12 @@ gh-pages
 .DS_Store
 
 package-lock.json
+
+editor-*
+.idea
+dist*
+src/**/*.js
+src/**/*.js.map
 dist
 /src/**/*.js
 /src/**/*.js.map
