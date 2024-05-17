@@ -37,7 +37,7 @@ export const UtilsStore = types
     const loadFileType = flow(function* loadFileType() {
       try {
         console.log(`${API_HOST}/api/settings/file_type`)
-        const response = yield fetch(`${API_HOST}/api/settings/file_type`);
+        const response:any = yield fetch(`${API_HOST}/api/settings/file_type`);
         const data = yield response.json();
         self.fileType = data.data; // Assign the data directly to fileType
         console.log(data);

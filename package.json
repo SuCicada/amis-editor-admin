@@ -2,7 +2,6 @@
   "name": "amis-editor-demo",
   "version": "1.0.0",
   "description": "amis 可视化编辑器",
-  "main": "index.js",
   "scripts": {
     "dev": "yarn start:dev",
     "start:dev": "vite --mode development",
@@ -13,6 +12,7 @@
     "dev1": "amis dev",
     "format": "prettier --write \"src/**/**/*.{js,jsx,ts,tsx,vue,scss,json}\""
   },
+  "trash": {
   "repository": {
     "type": "git",
     "url": "git+https://github.com/aisuda/amis-editor-demo.git"
@@ -27,7 +27,6 @@
     "url": "https://github.com/aisuda/amis-editor-demo/issues"
   },
   "homepage": "https://github.com/aisuda/amis-editor-demo#readme",
-  "trash": {
     "amis": "file:../amis/lib/packages/amis/",
     "amis-core": "file:../amis/lib/packages/amis-core",
     "amis-editor": "file:../amis/lib/packages/amis-editor",
@@ -60,6 +59,7 @@
     "viewerjs": "^1.11.6"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-decorators": "^7.24.1",
     "@svgr/plugin-jsx": "^8.1.0",
     "@svgr/plugin-svgo": "^8.1.0",
     "@types/jquery": "^3.5.24",

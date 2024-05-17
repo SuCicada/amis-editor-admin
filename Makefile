@@ -11,9 +11,10 @@ build: clean
 	vite build
 	du -sh dist
 
+#npx rimraf node_modules
 clean:
 	ts-clean-built --built
-	rm -rf dist
+	# npx rimraf dist
 
 dist_server:
 	serve dist -p 58761

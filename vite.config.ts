@@ -1,9 +1,10 @@
 import {defineConfig, loadEnv, ConfigEnv, UserConfig, PluginOption} from "vite";
 import react from "@vitejs/plugin-react";
-import viteEasyMock from "vite-easy-mock";
-import viteCompression from "vite-plugin-compression";
+// import viteEasyMock from "vite-easy-mock";
+// import viteCompression from "vite-plugin-compression";
 
 import svgr from "vite-plugin-svgr";
+import path from "path";
 
 export default defineConfig((mode: ConfigEnv): UserConfig => {
   // const env = loadEnv(mode.mode, process.cwd());
@@ -16,11 +17,15 @@ export default defineConfig((mode: ConfigEnv): UserConfig => {
     //   emptyOutDir: true,  // 清空输出目录
     // },
     // base: viteEnv.VITE_BASE_URL,
+    // base: "http://localhost:8000",
     // alias config
     base: "/",
     resolve: {
       extensions: [".js", ".ts", ".tsx", ".json", "*.svg"],
-      alias: [{find: "@", replacement: "/src/"}],
+      // alias: [{find: "@", replacement: "./src/"}],
+      alias: {
+        '@': path.resolve(__dirname, 'src'), // 添加path并使用path.resolve确保路径正确
+      }
     },
     // global css
     css: {
@@ -60,7 +65,7 @@ export default defineConfig((mode: ConfigEnv): UserConfig => {
     },
     // plugins
     plugins: [
-      viteEasyMock(),
+      // viteEasyMock(),
       // visualizer({ open: true }),
       svgr({
         exportAsDefault: true,
@@ -86,12 +91,14 @@ export default defineConfig((mode: ConfigEnv): UserConfig => {
     ],
     build: {
       target: "es2015",
-      outDir: "dist",
+      outDir: "./dist",
+      emptyOutDir: true,  // 清空输出目录
       // esbuild Packaging is faster, but cannot remove console.log, remove console and use terser mode
       minify: "esbuild",
       rollupOptions: {
         // input: {
-        //   app: './src/index.html', // default
+        //   main: './src/index.html',
+        //   app: './src/index.tsx', // default
         // },
         output: {
           // Enable parallel builds
@@ -101,12 +108,12 @@ export default defineConfig((mode: ConfigEnv): UserConfig => {
           assetFileNames: 'assets/[name]-[hash].[ext]' // 资源文件像 字体，图片等
         }
       },
-      terserOptions: {
-        compress: {
-          drop_console: true,
-          drop_debugger: true
-        },
-      },
+      // terserOptions: {
+      //   compress: {
+      //     drop_console: true,
+      //     drop_debugger: true
+      //   },
+      // },
       sourcemap: false,
     }
   };
