@@ -10,10 +10,10 @@ build: clean
 	#tsc
 	vite build
 	du -sh dist
-
-#npx rimraf node_modules
+clean_node_modules:
+	npx rimraf node_modules
 clean:
-	ts-clean-built --built
+	npx ts-clean-built --built
 	# npx rimraf dist
 
 dist_server:

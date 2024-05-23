@@ -1,10 +1,14 @@
 import {defineConfig, loadEnv, ConfigEnv, UserConfig, PluginOption} from "vite";
 import react from "@vitejs/plugin-react";
-// import viteEasyMock from "vite-easy-mock";
-// import viteCompression from "vite-plugin-compression";
-
 import svgr from "vite-plugin-svgr";
 import path from "path";
+
+
+// import viteEasyMock from "vite-easy-mock";
+// import viteCompression from "vite-plugin-compression";
+// import MonacoWebpackPlugin from "monaco-editor-webpack-plugin";
+// import monacoEditorPlugin from 'vite-plugin-monaco-editor';
+import monacoEditorPlugin from 'vite-plugin-monaco-editor';
 
 export default defineConfig((mode: ConfigEnv): UserConfig => {
   // const env = loadEnv(mode.mode, process.cwd());
@@ -65,6 +69,10 @@ export default defineConfig((mode: ConfigEnv): UserConfig => {
     },
     // plugins
     plugins: [
+      monacoEditorPlugin({
+        // 你可以在这里配置需要的语言和其他选项
+        languageWorkers: ['editorWorkerService', 'css', 'html', 'json', 'typescript']
+      }),
       // viteEasyMock(),
       // visualizer({ open: true }),
       svgr({

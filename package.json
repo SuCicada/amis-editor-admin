@@ -2,6 +2,7 @@
   "name": "amis-editor-demo",
   "version": "1.0.0",
   "description": "amis 可视化编辑器",
+  "main": "index.js",
   "scripts": {
     "dev": "yarn start:dev",
     "start:dev": "vite --mode development",
@@ -13,55 +14,61 @@
     "format": "prettier --write \"src/**/**/*.{js,jsx,ts,tsx,vue,scss,json}\""
   },
   "trash": {
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/aisuda/amis-editor-demo.git"
-  },
-  "keywords": [
-    "amis",
-    "editor"
-  ],
-  "author": "fex",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/aisuda/amis-editor-demo/issues"
-  },
-  "homepage": "https://github.com/aisuda/amis-editor-demo#readme",
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/aisuda/amis-editor-demo.git"
+    },
+    "keywords": [
+      "amis",
+      "editor"
+    ],
+    "author": "fex",
+    "license": "ISC",
+    "bugs": {
+      "url": "https://github.com/aisuda/amis-editor-demo/issues"
+    },
+    "homepage": "https://github.com/aisuda/amis-editor-demo#readme",
     "amis": "file:../amis/lib/packages/amis/",
     "amis-core": "file:../amis/lib/packages/amis-core",
     "amis-editor": "file:../amis/lib/packages/amis-editor",
     "amis-editor-core": "file:../amis/lib/packages/amis-editor-core",
-    "": ""
+    "": "",
+    "monaco-editor": "^0.44.0",
+    "react-monaco-editor": "^0.54.0"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.3",
-    "amis": "3.4.2",
-    "amis-core": "3.4.2",
-    "amis-editor": "5.5.0",
-    "amis-editor-core": "5.5.0",
-    "amis-formula": "3.4.2",
-    "amis-ui": "3.4.2",
+    "amis": "^6.4.1",
+    "amis-core": "^6.4.1",
+    "amis-editor": "^6.4.1",
+    "amis-editor-core": "^6.4.1",
+    "amis-formula": "^6.4.1",
+    "amis-ui": "^6.4.1",
     "axios": "0.21.2",
     "copy-to-clipboard": "^3.2.0",
+    "crypto-js": "^4.2.0",
     "history": "^5.3.0",
     "mobx": "4.15.7",
     "mobx-react": "6.3.1",
     "mobx-state-tree": "3.17.3",
-    "monaco-editor": "^0.44.0",
+    "monaco-editor": "0.48.0",
+    "monaco-editor-webpack-plugin": "7.1.0",
     "qs": "6.5.3",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "react-hook-form": "^7.39.3",
     "react-json-view": "^1.21.3",
-    "react-monaco-editor": "^0.54.0",
     "react-router": "5.0.1",
     "react-router-dom": "5.0.1",
+    "uuid": "^8.3.2",
     "viewerjs": "^1.11.6"
   },
   "devDependencies": {
     "@babel/plugin-proposal-decorators": "^7.24.1",
+    "@babel/plugin-syntax-decorators": "^7.24.1",
     "@svgr/plugin-jsx": "^8.1.0",
     "@svgr/plugin-svgo": "^8.1.0",
+    "@types/crypto-js": "^4.2.0",
     "@types/jquery": "^3.5.24",
     "@types/lodash": "^4.14.123",
     "@types/node": "^20.8.10",
@@ -74,7 +81,6 @@
     "acorn": "^8.8.2",
     "amis-widget-cli": "^3.2.0",
     "dotenv": "^16.3.1",
-    "monaco-editor-webpack-plugin": "6.0.0",
     "prettier": "^2.2.1",
     "rollup-plugin-visualizer": "^5.9.2",
     "sass": "^1.63.4",
@@ -84,6 +90,7 @@
     "vite-easy-mock": "^1.0.9",
     "vite-plugin-compression": "^0.5.1",
     "vite-plugin-html": "^3.2.0",
+    "vite-plugin-monaco-editor": "1.1.0",
     "vite-plugin-svgr": "^3.2.0"
   }
 }

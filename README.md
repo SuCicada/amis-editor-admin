@@ -1,3 +1,6 @@
+## be careful
+use npm install , yarn 会报错
+
 ## windows
 ### 1. 更新代码 
 ```bash
