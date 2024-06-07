@@ -75,3 +75,8 @@ dist
 /stats.html
 .idea
 /demo-*
+/src/test/utils.test.ts
+/src/custom/my.d.ts
+/src/custom/my.jsx
+/src/custom/my.mjs
+/cherrypick
