@@ -81,6 +81,7 @@
     "acorn": "^8.8.2",
     "amis-widget-cli": "^3.2.0",
     "dotenv": "^16.3.1",
+    "pdfjs-dist": "^4.3.136",
     "prettier": "^2.2.1",
     "rollup-plugin-visualizer": "^5.9.2",
     "sass": "^1.63.4",
