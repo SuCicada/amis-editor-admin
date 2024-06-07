@@ -1,0 +1,186 @@
+{
+  "asideResizor": false,
+  "body": [
+    {
+      "actions": [
+        {
+          "id": "u:3009b299fd6a",
+          "label": "刷新",
+          "onEvent": {
+            "click": {
+              "actions": [
+                {
+                  "actionType": "reload",
+                  "componentId": "u:d591104f1a82",
+                  "data": null
+                }
+              ]
+            }
+          },
+          "type": "button"
+        },
+        {
+          "id": "u:581e83c43a37",
+          "label": "清理无用图片",
+          "onEvent": {
+            "click": {
+              "actions": [
+                {
+                  "actionType": "ajax",
+                  "args": {
+                    "api": {
+                      "adaptor": "",
+                      "messages": {},
+                      "method": "post",
+                      "requestAdaptor": "",
+                      "url": "${API_HOST}/api/settings/clean_unused_images"
+                    },
+                    "options": {}
+                  },
+                  "outputVar": "responseResult"
+                },
+                {
+                  "actionType": "reload",
+                  "componentId": "u:d591104f1a82",
+                  "data": null
+                }
+              ]
+            }
+          },
+          "type": "button"
+        }
+      ],
+      "body": [
+        {
+          "id": "u:bc96303cc55c",
+          "label": "无用图片数量",
+          "name": "unused_images_num",
+          "readOnly": true,
+          "type": "input-text"
+        },
+        {
+          "id": "u:5c06a28a55ea",
+          "label": "旧的数据库文件数量",
+          "name": "old_db_num",
+          "readOnly": true,
+          "type": "input-text"
+        }
+      ],
+      "canAccessSuperData": false,
+      "dsType": "api",
+      "feat": "View",
+      "id": "u:d591104f1a82",
+      "initApi": {
+        "method": "get",
+        "url": ""
+      },
+      "mode": "horizontal",
+      "submitText": "",
+      "title": "",
+      "type": "form"
+    },
+    {
+      "type": "flex",
+      "isSorptionContainer": true,
+      "sorptionPosition": "top",
+      "className": "p-1",
+      "items": [
+        {
+          "type": "container",
+          "body": [],
+          "size": "none",
+          "style": {
+            "position": "static",
+            "display": "block",
+            "flex": "1 1 auto",
+            "flexGrow": 1,
+            "flexBasis": 0
+          },
+          "wrapperBody": false,
+          "isFixedHeight": false,
+          "isFixedWidth": false,
+          "id": "u:5ce32914af46"
+        },
+        {
+          "type": "container",
+          "body": [],
+          "size": "none",
+          "style": {
+            "position": "static",
+            "display": "block",
+            "flex": "1 1 auto",
+            "flexGrow": 1,
+            "flexBasis": 0
+          },
+          "wrapperBody": false,
+          "isFixedHeight": false,
+          "isFixedWidth": false,
+          "id": "u:f10e20c49a52"
+        },
+        {
+          "type": "container",
+          "body": [],
+          "size": "none",
+          "style": {
+            "position": "static",
+            "display": "block",
+            "flex": "1 1 auto",
+            "flexGrow": 1,
+            "flexBasis": 0
+          },
+          "wrapperBody": false,
+          "isFixedHeight": false,
+          "isFixedWidth": false,
+          "id": "u:207f9b8b4c57"
+        },
+        {
+          "type": "container",
+          "body": [],
+          "size": "none",
+          "style": {
+            "position": "static",
+            "display": "block",
+            "flex": "1 1 auto",
+            "flexGrow": 1,
+            "flexBasis": 0
+          },
+          "wrapperBody": false,
+          "isFixedHeight": false,
+          "isFixedWidth": false,
+          "id": "u:5d24225ce901"
+        }
+      ],
+      "style": {
+        "position": "fixed",
+        "inset": "0 auto auto 0",
+        "zIndex": 10,
+        "width": "100%",
+        "overflowX": "auto",
+        "overflowY": "auto"
+      },
+      "isFixedWidth": true,
+      "isFixedHeight": false,
+      "originPosition": "right-bottom",
+      "themeCss": {
+        "baseControlClassName": {
+          "padding-and-margin:default": {
+            "margin": "0"
+          }
+        }
+      },
+      "id": "u:55eb8824c3b1"
+    }
+  ],
+  "id": "u:0f175bc686b0",
+  "pullRefresh": {
+    "disabled": true
+  },
+  "style": {},
+  "themeCss": {
+    "baseControlClassName": {
+      "boxShadow:default": " 0px 0px 0px 0px transparent"
+    }
+  },
+  "title": "系统管理",
+  "type": "page"
+}

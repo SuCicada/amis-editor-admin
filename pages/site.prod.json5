@@ -1,0 +1,64 @@
+{
+  "status": 0,
+  "msg": "",
+  "data": {
+    "pages": [
+//      {
+//        "label": "Home",
+//        "url": "/",
+//        "redirect": "/admin/gen/content"
+//      },
+      {
+        "label": "素材制作",
+        "children": [
+          {
+            "label": "文本内容",
+            "url": "/gen/content",
+            "icon": "fa fa-plus",
+            "schemaApi": "/pages/gen/content.json"
+          },
+          {
+            "label": "分段 table",
+            "url": "/gen/table",
+            "icon": "fa fa-plus",
+            "schemaApi": "/pages/gen/table.json"
+          },
+          {
+            "label": "视频制作",
+            "url": "/gen/video_make",
+            "icon": "fa fa-plus",
+            "schemaApi": "/pages/gen/video_make.json"
+          },
+//          {
+//            "label": "图库管理",
+//            "url": "/gen/gallery_manage",
+//            "icon": "fa fa-plus",
+//            "schemaApi": "/pages/gen/gallery_manage.json"
+//          },
+//          {
+//            "label": "AI出图",
+//            "url": "/gen/image_make",
+//            "icon": "fa fa-plus",
+//            "schemaApi": "/pages/gen/image_make.json"
+//          },
+          {
+            "label": "系统管理",
+            "icon": "fa fa-cog",
+            "url": "/gen/settings",
+            "schemaApi": "/pages/gen/settings.json"
+          },
+//          {
+//            "label": "test",
+//            "url": "/gen/test",
+//            "schemaApi": "/pages/gen/test.json",
+//          },
+//          {
+//            "label": "test111",
+//            "url": "/gen/test11",
+//            "schemaApi": "/pages/gen/test11.json",
+//          }
+        ]
+      },
+    ]
+  }
+}

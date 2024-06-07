@@ -1,0 +1,36 @@
+{
+  "status": 0,
+  "msg": "",
+  "data": {
+    "pages": [
+//      {
+//        "label": "Home",
+//        "url": "/",
+//        "redirect": "/admin/gen/content"
+//      },
+      {
+        "label": "素材制作",
+        "children": [
+          {
+            "label": "文本内容",
+            "url": "/gen/content",
+            "icon": "fa fa-edit",
+            "schemaApi": "/pages/gen/content.json"
+          },
+          {
+            "label": "分段 table",
+            "url": "/gen/table",
+            "icon": "fa fa-stream",
+            "schemaApi": "/pages/gen/table.json"
+          },
+          {
+            "label": "settings",
+            "icon": "fa fa-acorn",
+            "url": "/gen/settings",
+            "schemaApi": "/pages/gen/settings.json"
+          }
+        ]
+      },
+    ]
+  }
+}

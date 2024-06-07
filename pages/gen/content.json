@@ -1,0 +1,400 @@
+{
+  "aside": [],
+  "asideResizor": false,
+  "body": [
+    {
+      "aside": [],
+      "asideResizor": false,
+      "body": [
+        {
+          "columns": [
+            {
+              "body": [
+                {
+                  "actions": [
+                    {
+                      "confirmText": "清空这些，真的吗",
+                      "editorState": "default",
+                      "id": "u:e20cc25dc9fe",
+                      "label": "清空",
+                      "onEvent": {
+                        "click": {
+                          "actions": [
+                            {
+                              "actionType": "setValue",
+                              "args": {
+                                "value": " "
+                              },
+                              "componentId": "u:08a7382347f1"
+                            },
+                            {
+                              "actionType": "setValue",
+                              "args": {
+                                "value": " "
+                              },
+                              "componentId": "u:58984ce23fcb"
+                            },
+                            {
+                              "componentId": "u:09ad9df4b620",
+                              "actionType": "setValue",
+                              "args": {
+                                "value": " "
+                              }
+                            }
+                          ]
+                        }
+                      },
+                      "type": "button"
+                    },
+                    {
+                      "editorState": "default",
+                      "id": "u:30778189530d",
+                      "label": "自动分段",
+                      "onEvent": {
+                        "click": {
+                          "actions": [
+                            {
+                              "actionType": "submit",
+                              "componentId": "u:9434033cd98c",
+                              "stopPropagation": ""
+                            }
+                          ],
+                          "weight": 0
+                        }
+                      },
+                      "primary": true,
+                      "type": "button"
+                    },
+                    {
+                      "editorState": "default",
+                      "id": "u:e78cdb992559",
+                      "label": "文心一言",
+                      "level": "success",
+                      "onEvent": {
+                        "click": {
+                          "actions": [
+                            {
+                              "actionType": "disabled",
+                              "componentId": "u:a9ad017d6976"
+                            },
+                            {
+                              "actionType": "toast",
+                              "args": {
+                                "className": "theme-toast-action-scope",
+                                "closeButton": true,
+                                "msg": "正在请求文心一言接口，请稍等",
+                                "msgType": "info",
+                                "position": "top-right",
+                                "showIcon": true
+                              }
+                            },
+                            {
+                              "actionType": "ajax",
+                              "api": {
+                                "adaptor": "",
+                                "data": {
+                                  "body": "${body}",
+                                  "has_title": "${has_title}",
+                                  "title": "${title}",
+                                  "wenxin_prompt": "${wenxin_prompt}"
+                                },
+                                "messages": {
+                                  "failed": "文心一言获取失败！",
+                                  "success": "文心一言获取成功"
+                                },
+                                "method": "post",
+                                "requestAdaptor": "",
+                                "url": "${API_HOST}/api/get_baidu_advice"
+                              },
+                              "options": {},
+                              "outputVar": "responseResult"
+                            },
+                            {
+                              "actionType": "setValue",
+                              "args": {
+                                "value": "${event.data.responseResult.responseData[\"res\"]}"
+                              },
+                              "componentId": "u:09ad9df4b620"
+                            },
+                            {
+                              "actionType": "enabled",
+                              "componentId": "u:a9ad017d6976"
+                            }
+                          ]
+                        }
+                      },
+                      "type": "button"
+                    },
+                    {
+                      "confirmText": "下一步会覆盖之前生成的所有内容，确认吗",
+                      "editorState": "default",
+                      "id": "u:aa764e663d6a",
+                      "label": "下一步",
+                      "level": "enhance",
+                      "onEvent": {
+                        "click": {
+                          "actions": [
+                            {
+                              "actionType": "toast",
+                              "args": {
+                                "className": "theme-toast-action-scope",
+                                "closeButton": true,
+                                "msg": "正在生成素材，请等待~",
+                                "msgType": "info",
+                                "position": "top-right",
+                                "showIcon": true,
+                                "timeout": 7000,
+                                "title": "Tips"
+                              }
+                            },
+                            {
+                              "actionType": "disabled",
+                              "componentId": "u:a9ad017d6976"
+                            },
+                            {
+                              "actionType": "ajax",
+                              "api": {
+                                "adaptor": "",
+                                "data": {
+                                  "body": "${body}",
+                                  "title": "${title}",
+                                  "use_content": "${use_content}",
+                                  "wenxin": "${wenxin}",
+                                  "wenxin_prompt": "${wenxin_prompt}"
+                                },
+                                "dataType": "json",
+                                "messages": {
+                                  "failed": "添加任务失败！",
+                                  "success": "成功添加任务"
+                                },
+                                "method": "post",
+                                "requestAdaptor": "",
+                                "url": "${API_HOST}/api/new_project"
+                              },
+                              "options": {},
+                              "outputVar": "responseResult"
+                            },
+                            {
+                              "actionType": "url",
+                              "args": {
+                                "blank": false,
+                                "url": "/#/admin/gen/table"
+                              }
+                            }
+                          ],
+                          "weight": 0
+                        }
+                      },
+                      "primary": true,
+                      "rightIcon": "",
+                      "tooltip": "点击后请稍等，不要重复点击",
+                      "type": "button"
+                    }
+                  ],
+                  "api": {
+                    "adaptor": "",
+                    "data": {
+                      "&": "$$"
+                    },
+                    "dataType": "json",
+                    "messages": {
+                      "failed": "分案自动分割失败！",
+                      "success": "文案自动分割成功"
+                    },
+                    "method": "post",
+                    "requestAdaptor": "",
+                    "url": "${API_HOST}/api/auto_segment"
+                  },
+                  "body": [
+                    {
+                      "columns": [
+                        {
+                          "body": [
+                            {
+                              "clearable": true,
+                              "id": "u:08a7382347f1",
+                              "label": "标题",
+                              "name": "title",
+                              "type": "input-text"
+                            },
+                            {
+                              "id": "u:58984ce23fcb",
+                              "label": "内容",
+                              "maxRows": 20,
+                              "minRows": 4,
+                              "name": "body",
+                              "type": "textarea"
+                            },
+                            {
+                              "id": "u:c4d4a95bc1e3",
+                              "label": "文心一言 Prompt",
+                              "maxRows": 20,
+                              "minRows": 3,
+                              "name": "wenxin_prompt",
+                              "placeholder": "可以在这里修改文心一言的 prompt (%s 是内容占位符，请勿删除！)",
+                              "remark": {
+                                "className": "Remark--warning",
+                                "content": "%s 是内容占位符，请勿删除！",
+                                "icon": "fa fa-question-circle",
+                                "placement": "top",
+                                "title": "注意！",
+                                "trigger": [
+                                  "hover"
+                                ]
+                              },
+                              "type": "textarea",
+                              "value": ""
+                            }
+                          ],
+                          "id": "u:3818850ffc46",
+                          "md": 5,
+                          "style": {
+                            "boxShadow": " 0px 0px 0px 0px transparent"
+                          }
+                        },
+                        {
+                          "body": [
+                            {
+                              "body": [
+                                {
+                                  "id": "u:b55202149510",
+                                  "inline": false,
+                                  "style": {
+                                    "boxShadow": " 0px 0px 0px 0px transparent"
+                                  },
+                                  "tpl": "请务必保证文心一言结果包含 \"画面\" 和 \"旁白\"",
+                                  "type": "tpl",
+                                  "wrapperComponent": "h3"
+                                }
+                              ],
+                              "id": "u:75cc786b3ecd",
+                              "level": "info",
+                              "title": "",
+                              "type": "alert"
+                            },
+                            {
+                              "description": "",
+                              "id": "u:09ad9df4b620",
+                              "label": "文心一言结果",
+                              "maxRows": 30,
+                              "minRows": 30,
+                              "name": "wenxin",
+                              "placeholder": "请务必保证文心一言结果包含 \"画面\" 和 \"旁白\"",
+                              "showCounter": true,
+                              "type": "textarea",
+                              "value": ""
+                            },
+                            {
+                              "body": [
+                                {
+                                  "autoFill": {},
+                                  "description": "",
+                                  "disabled": false,
+                                  "id": "u:dcf6d129eb73",
+                                  "label": "",
+                                  "name": "has_title",
+                                  "option": "是否读标题",
+                                  "static": false,
+                                  "type": "checkbox",
+                                  "value": true
+                                },
+                                {
+                                  "id": "u:9ffd304f077b",
+                                  "label": "",
+                                  "name": "use_content",
+                                  "option": "是否使用文心一言的结果",
+                                  "type": "checkbox",
+                                  "value": true
+                                }
+                              ],
+                              "id": "u:edaf7108ec63",
+                              "isFixedHeight": false,
+                              "isFixedWidth": false,
+                              "style": {
+                                "boxShadow": " 0px 0px 0px 0px transparent",
+                                "display": "block",
+                                "position": "static",
+                                "textAlign": "right"
+                              },
+                              "type": "container",
+                              "wrapperBody": false
+                            }
+                          ],
+                          "id": "u:f577a04a253e"
+                        }
+                      ],
+                      "id": "u:a9ad017d6976",
+                      "style": {
+                        "boxShadow": " 0px 0px 0px 0px transparent"
+                      },
+                      "type": "grid"
+                    }
+                  ],
+                  "debug": false,
+                  "dsType": "api",
+                  "feat": "Insert",
+                  "id": "u:9434033cd98c",
+                  "initApi": {
+                    "method": "get",
+                    "url": "${API_HOST}/api/content"
+                  },
+                  "loadingConfig": {
+                    "show": true
+                  },
+                  "mode": "horizontal",
+                  "onEvent": {
+                    "submitSucc": {
+                      "actions": [
+                        {
+                          "actionType": "setValue",
+                          "args": {
+                            "value": "${event.data.result.data}"
+                          },
+                          "componentId": "u:58984ce23fcb",
+                          "expression": ""
+                        }
+                      ],
+                      "weight": 0
+                    }
+                  },
+                  "persistData": false,
+                  "submitText": "自动分段",
+                  "title": "",
+                  "type": "form",
+                  "wrapWithPanel": true
+                }
+              ],
+              "id": "u:5115e9166d8a",
+              "style": {
+                "boxShadow": " 0px 0px 0px 0px transparent"
+              }
+            }
+          ],
+          "id": "u:d79d8b97a8a8",
+          "style": {
+            "boxShadow": " 0px 0px 0px 0px transparent"
+          },
+          "type": "grid"
+        }
+      ],
+      "id": "u:16757795d691",
+      "pullRefresh": {
+        "disabled": true
+      },
+      "style": {
+        "boxShadow": " 0px 0px 0px 0px transparent"
+      },
+      "title": "内容处理",
+      "type": "page"
+    }
+  ],
+  "id": "u:16757795d691",
+  "pullRefresh": {
+    "disabled": true
+  },
+  "style": {
+    "boxShadow": " 0px 0px 0px 0px transparent"
+  },
+  "title": "内容处理",
+  "type": "page"
+}
