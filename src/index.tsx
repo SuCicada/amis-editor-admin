@@ -12,6 +12,9 @@ import 'amis/sdk/iconfont.css';
 import 'amis-editor-core/lib/style.css';
 import './scss/style.scss';
 import {setDefaultTheme} from 'amis';
+import {setThemeConfig} from 'amis-editor-core';
+import themeConfig from 'amis-theme-editor-helper/lib/systemTheme/cxd';
+
 // import * as dotenv from 'dotenv';
 // dotenv.config();
 // import "/Users/peng/PROGRAM/GitHub/amis-admin/public/my.js";
@@ -60,5 +63,7 @@ self.MonacoEnvironment = {
 };
 
 setDefaultTheme('cxd');
+setThemeConfig(themeConfig);
+
 // react < 18
 ReactDOM.render(<App/>, document.getElementById('root'));
