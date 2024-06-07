@@ -1,16 +1,14 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {Editor, ShortcutKey} from 'amis-editor';
 import {inject, observer} from 'mobx-react';
-import {RouteComponentProps, useParams} from 'react-router-dom';
-import {toast, Select, SchemaObject} from 'amis';
+import {RouteComponentProps} from 'react-router-dom';
+import {toast, Select} from 'amis';
 import {currentLocale} from 'i18n-runtime';
 import {Icon} from '../icons/index';
 import {IMainStore} from '../store';
 import '../editor/DisabledEditorPlugin'; // 用于隐藏一些不需要的Editor预置组件
-import {API_HOST} from '../config';
-import _ from "lodash";
-import '../renderer/MyRenderer';
-import MyRendererPlugin from '../editor/MyRenderer';
+// import '../renderer/MyRenderer';
+// import '../editor/MyRenderer';
 
 let currentIndex = -1;
 
@@ -35,79 +33,28 @@ const editorLanguages = [
 ];
 
 export default inject('store')(
-  observer(function (
-    {
-      store,
-      location,
-      history,
-      match
-    }: { store: IMainStore } & RouteComponentProps<{ id: string }>) {
-    let [schema, setSchema] = React.useState<SchemaObject>(null as any)
-    let [loadOver, setLoadOver] = React.useState(false)
-    const id = match.params.id;
-    // const {id} = useParams();
-    // console.log(match)
-    // console.log(params)
-
-
-    useEffect(() => {
-      (async function () {
-        let response = await fetch(`${API_HOST}/pages/schema/${id}`)
-        let _schema = await response.json()
-        setSchema(_schema)
-        toast.success('加载成功', '提示');
-        setLoadOver(true)
-      })()
-    }, []);
-
+  observer(function ({
+    store,
+    location,
+    history,
+    match
+  }: {store: IMainStore} & RouteComponentProps<{id: string}>) {
     const index: number = parseInt(match.params.id, 10);
     const curLanguage = currentLocale(); // 获取当前语料类型
 
     if (index !== currentIndex) {
       currentIndex = index;
-      // store.updateSchema(store.pages[index].schema);
-
+      store.updateSchema(store.pages[index].schema);
     }
 
-    async function saveToServer(_schema: any = {}) {
-      // console.log('_schema', _schema);
-      if (!loadOver) {
-        return
-      }
-      if (!_schema || _.isEmpty(_schema)) {
-        return
-      }
-      await fetch(`${API_HOST}/pages/schema/${id}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(_schema)
-      }).then(response => {
-        if (response.ok) {
-          toast.success('保存成功', '提示');
-        } else {
-          toast.error('保存失败', '提示');
-        }
-      })
-    }
-
-    useEffect(() => {
-      // if (schema && !_.isEmpty(schema)){
-        saveToServer(schema)
-      // }
-    }, [schema])
-
-    async function save() {
-      await saveToServer(schema)
-      store.updatePageSchemaAt(id);
+    function save() {
+      store.updatePageSchemaAt(index);
       toast.success('保存成功', '提示');
     }
 
     function onChange(value: any) {
-      setSchema(value)
       store.updateSchema(value);
-      store.updatePageSchemaAt(id);
+      store.updatePageSchemaAt(index);
     }
 
     function changeLocale(value: string) {
@@ -116,11 +63,10 @@ export default inject('store')(
     }
 
     function exit() {
-      // history.push(`/${store.pages[index].path}`);
-      history.push(`/admin/${id}`);
+      history.push(`/${store.pages[index].path}`);
     }
 
-    let editor = (
+    return (
       <div className="Editor-Demo">
         <div className="Editor-header">
           <div className="Editor-title">amis 可视化编辑器</div>
@@ -134,7 +80,7 @@ export default inject('store')(
                   store.setIsMobile(false);
                 }}
               >
-                <Icon icon="pc-preview" title="PC模式"/>
+                <Icon icon="pc-preview" title="PC模式" />
               </div>
               <div
                 className={`Editor-view-mode-btn editor-header-icon ${
@@ -144,13 +90,13 @@ export default inject('store')(
                   store.setIsMobile(true);
                 }}
               >
-                <Icon icon="h5-preview" title="移动模式"/>
+                <Icon icon="h5-preview" title="移动模式" />
               </div>
             </div>
           </div>
 
           <div className="Editor-header-actions">
-            <ShortcutKey/>
+            <ShortcutKey />
             <Select
               className="margin-left-space"
               options={editorLanguages}
@@ -177,11 +123,10 @@ export default inject('store')(
         </div>
         <div className="Editor-inner">
           <Editor
-            plugins={[MyRendererPlugin]}
             theme={'cxd'}
             preview={store.preview}
             isMobile={store.isMobile}
-            value={schema}
+            value={store.schema}
             onChange={onChange}
             onPreview={() => {
               store.setPreview(true);
@@ -197,19 +142,11 @@ export default inject('store')(
               copy: store.copy
             }}
             ctx={{
-              API_HOST: API_HOST,
+            API_HOST:"http://localhost:10930",
             }}
           />
         </div>
       </div>
     );
-    if (schema && !_.isEmpty(schema)) {
-      return editor
-    } else {
-      return <h1 style={{
-        display: "flex",
-        justifyContent: 'center'
-      }}>等等🙏，疯狂生成中</h1>
-    }
   })
 );

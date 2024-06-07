@@ -32,7 +32,13 @@ export default function (): JSX.Element {
           data = JSON.stringify(data);
           config.headers['Content-Type'] = 'application/json';
         }
-
+        console.log('config', config);
+        console.log('data', typeof data, data);
+        if (method === "post" || method === "put" || method === "patch") {
+          if (data && typeof data === 'string') {
+            data = JSON.parse(data);
+          }
+        }
         return (axios as any)[method](url, data, config);
       },
       isCancel: (e: any) => axios.isCancel(e),

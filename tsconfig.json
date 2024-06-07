@@ -6,7 +6,11 @@
     "sourceMap": true,
     "jsx": "react",
     "moduleResolution": "node",
-    "rootDir": "./src",
+    "baseUrl": "./",
+    "paths": {
+      "@": ["src"],
+      "@/*": ["src/*"]
+    },
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "noImplicitAny": true,
@@ -14,11 +18,10 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "allowSyntheticDefaultImports": true,
-    "typeRoots": ["./node_modules/@types", "./typings"]
+    "typeRoots": ["./node_modules/@types", "./typings"],
+    "types": ["vite-plugin-svgr/client"]
   },
-  "include": ["**/*"],
-  "exclude": [
-    "node_modules"
-  ],
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "vite.config.ts"],
+  "exclude": ["node_modules", "dist", "**/*.js"],
   "types": ["typePatches"]
 }

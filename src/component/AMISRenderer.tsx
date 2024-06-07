@@ -5,6 +5,7 @@ import {getEnv} from 'mobx-state-tree';
 import {IMainStore} from '../store';
 import qs from 'qs';
 import {render as amisRender, utils, filter} from 'amis';
+import {API_HOST} from "@/config";
 
 export function schema2component(
   schema: any,
@@ -201,7 +202,10 @@ export function schema2component(
           alert: store.alert,
           copy: store.copy,
           propsTransform: transform,
-          theme: store.theme
+          theme: store.theme,
+          context:{
+            API_HOST: API_HOST,
+          }
         },
         this.getEnv()
       );
@@ -210,7 +214,8 @@ export function schema2component(
     }
   }
 
-  return withRouter(SchemaRenderer);
+  // @ts-ignore
+    return withRouter(SchemaRenderer);
 }
 
 export default schema2component({type: 'page', body: 'It works'});

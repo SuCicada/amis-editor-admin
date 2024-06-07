@@ -5,6 +5,7 @@ import {NotFound} from 'amis';
 export default () => (
   <NotFound
     links={
+// @ts-ignore
       <Link to="/" className="list-group-item">
         <i className="fa fa-chevron-right text-muted" />
         <i className="fa fa-fw fa-mail-forward m-r-xs" />

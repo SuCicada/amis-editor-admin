@@ -1,12 +1,17 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {observer, inject} from 'mobx-react';
 import {IMainStore} from '../store';
 import {Button, AsideNav, Layout, confirm} from 'amis';
 import {RouteComponentProps, matchPath, Switch, Route} from 'react-router';
-import {Link} from 'react-router-dom';
+import {Link, Redirect} from 'react-router-dom';
 import NotFound from './NotFound';
 import AMISRenderer from '../component/AMISRenderer';
 import AddPageModal from '../component/AddPageModal';
+import {API_HOST} from "@/config";
+import {AppPage, AppSchema} from "amis/lib/renderers/App";
+import AdminPreview from "@/route/AdminPreview";
+import {LinkItem} from "amis-ui/lib/components/AsideNav";
+import {MenuProps, NavigationItem} from "amis-ui/lib/components/menu";
 
 function isActive(link: any, location: any) {
   const ret = matchPath(location?.pathname, {
@@ -20,10 +25,35 @@ function isActive(link: any, location: any) {
 
 export default inject('store')(
   observer(function ({
-    store,
-    location,
-    history
-  }: {store: IMainStore} & RouteComponentProps) {
+                       store,
+                       location,
+                       history
+                     }: { store: IMainStore } & RouteComponentProps) {
+    let [pages, setPages] = React.useState<AppPage[]>([])
+    useEffect(() => {
+      (async () => {
+        let response = await fetch(`${API_HOST}/pages/site.json`)
+        let data = await response.json()
+        let appSchema: AppSchema = data.data
+        let _pages = appSchema.pages
+
+        if (_pages) {
+          if (!Array.isArray(_pages)) {
+            // setPages([_pages])
+            _pages = [_pages]
+          }
+          // _pages.forEach((item: AppPage) => {
+          for (let item of _pages) {
+            if (item.children) {
+              setPages(item.children)
+              return
+            }
+          }
+        }
+      })()
+    }, [])
+
+
     function renderHeader() {
       return (
         <>
@@ -52,16 +82,22 @@ export default inject('store')(
     }
 
     function renderAside() {
-      console.log('store.pages', store);
-        console.log('location', location);
+      // console.log('store.pages', store);
+      // console.log('location', location);
 
-      const navigations = store.pages.map(item => ({
+      const navigations = pages.map(item => ({
         label: item.label,
-        path: `/preview/${item.path}`,
-        icon: item.icon
+        path: `/admin${item.url}`,
+        icon: item.icon,
+        url: item.url
+        // name:
       }));
-      const paths = navigations.map(item => item.path);
-      console.log('store.asideFolded', store.asideFolded);
+
+      // const paths = {}
+      // pages.forEach(item=>{
+      //   paths[item.url] = item.
+      // })
+      // console.log('store.asideFolded', store.asideFolded);
       return (
         <AsideNav
           key={store.asideFolded ? 'folded-aside' : 'aside'}
@@ -72,6 +108,9 @@ export default inject('store')(
             }
           ]}
           renderLink={({link, toggleExpand, classnames: cx, depth}: any) => {
+            // 这个link和navigations内容一样的
+
+            // console.log(link)
             if (link.hidden) {
               return null;
             }
@@ -89,21 +128,21 @@ export default inject('store')(
             }
 
             link.badge &&
-              children.push(
-                <b
-                  key="badge"
-                  className={cx(
-                    `AsideNav-itemBadge`,
-                    link.badgeClassName || 'bg-info'
-                  )}
-                >
-                  {link.badge}
-                </b>
-              );
+            children.push(
+              <b
+                key="badge"
+                className={cx(
+                  `AsideNav-itemBadge`,
+                  link.badgeClassName || 'bg-info'
+                )}
+              >
+                {link.badge}
+              </b>
+            );
 
             if (link.icon) {
               children.push(
-                <i key="icon" className={cx(`AsideNav-itemIcon`, link.icon)} />
+                <i key="icon" className={cx(`AsideNav-itemIcon`, link.icon)}/>
               );
             } else if (store.asideFolded && depth === 1) {
               children.push(
@@ -117,21 +156,21 @@ export default inject('store')(
               );
             }
 
-            link.active ||
-              children.push(
-                <i
-                  key="delete"
-                  data-tooltip="删除"
-                  data-position="bottom"
-                  className={'navbtn fa fa-times'}
-                  onClick={(e: React.MouseEvent) => {
-                    e.preventDefault();
-                    confirm('确认要删除').then(confirmed => {
-                      confirmed && store.removePageAt(paths.indexOf(link.path));
-                    });
-                  }}
-                />
-              );
+            // link.active ||
+            // children.push(
+            //   <i
+            //     key="delete"
+            //     data-tooltip="删除"
+            //     data-position="bottom"
+            //     className={'navbtn fa fa-times'}
+            //     onClick={(e: React.MouseEvent) => {
+            //       e.preventDefault();
+            //       confirm('确认要删除').then(confirmed => {
+            //         confirmed && store.removePageAt(paths.indexOf(link.path));
+            //       });
+            //     }}
+            //   />
+            // );
 
             children.push(
               <i
@@ -141,7 +180,7 @@ export default inject('store')(
                 className={'navbtn fa fa-pencil'}
                 onClick={(e: React.MouseEvent) => {
                   e.preventDefault();
-                  history.push(`/edit/${paths.indexOf(link.path)}`);
+                  history.push(`/edit${link.url}`);
                 }}
               />
             );
@@ -152,11 +191,11 @@ export default inject('store')(
               </span>
             );
 
-              return link.path ? (
+            return link.path ? (
               link.active ? (
                 <a>{children}</a>
               ) : (
-            // @ts-ignore
+                // @ts-ignore
                 <Link to={link.path[0] === '/' ? link.path : `${link.path}`}>
                   {children}
                 </Link>
@@ -167,8 +206,8 @@ export default inject('store')(
                   link.onClick
                     ? link.onClick
                     : link.children
-                    ? () => toggleExpand(link)
-                    : undefined
+                      ? () => toggleExpand(link)
+                      : undefined
                 }
               >
                 {children}
@@ -185,7 +224,7 @@ export default inject('store')(
       );
     }
 
-    function handleConfirm(value: {label: string; icon: string; path: string}) {
+    function handleConfirm(value: { label: string; icon: string; path: string }) {
       store.addPage({
         ...value,
         schema: {
@@ -197,7 +236,8 @@ export default inject('store')(
       store.setAddPageIsOpen(false);
     }
 
-    console.log('store.pages', store.pages);
+    // console.log('store.pages', store.pages);
+
     return (
       <Layout
         aside={renderAside()}
@@ -206,22 +246,26 @@ export default inject('store')(
         offScreen={store.offScreen}
       >
         <Switch>
-          {store.pages.map((item: any) => (
-            <Route
-              key={item.id}
-              path={`/preview/${item.path}`}
-              render={() => <AMISRenderer schema={item.schema} />}
-            />
-          ))}
-          <Route component={NotFound} />
+          <Redirect to={`/admin`} from={`/`} exact />
+          {pages.map((item: AppPage) => {
+            // console.log('item', item);
+            return (
+              <Route
+                key={item.label}
+                path={`/admin${item.url}`}
+                render={() => <AdminPreview schemaApi={item.schemaApi}/>}
+              />
+            )
+          })}
+          <Route component={NotFound}/>
         </Switch>
-        <AddPageModal
-          show={store.addPageIsOpen}
-          onClose={() => store.setAddPageIsOpen(false)}
-          onConfirm={handleConfirm}
-          pages={store.pages.concat()}
-        />
+        {/*<AddPageModal*/}
+        {/*  show={store.addPageIsOpen}*/}
+        {/*  onClose={() => store.setAddPageIsOpen(false)}*/}
+        {/*  onConfirm={handleConfirm}*/}
+        {/*  pages={store.pages.concat()}*/}
+        {/*/>*/}
       </Layout>
     );
   })
-);
+)

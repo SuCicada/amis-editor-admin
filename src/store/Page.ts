@@ -11,6 +11,7 @@ export const PageStore = types
   .actions(self => {
     function updateSchema(schema: any) {
       self.schema = schema;
+      console.log('updateSchema', schema);
     }
 
     return {
