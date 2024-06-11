@@ -1,6 +1,7 @@
 1. api
 
 
+
 ```bash
 git clone git@github.com:SuCicada/amis-admin-editor.git temp/amis-editor
 git clone --no-hardlinks temp/amis-editor amis-editor
@@ -22,3 +23,10 @@ git filter-branch -f --prune-empty \
 #  --tag-name-filter cat -- --all
 ```
 
+## amis-editor更新する時
+条件：SuCicada/amis-editor-demo を更新した
+
+```bash
+1. temp/amis-editorをGitHubから更新する
+2. ./git-optimize-history.sh
+```
